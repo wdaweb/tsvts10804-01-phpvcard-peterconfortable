@@ -1,6 +1,20 @@
 <?php
-/**
- * 設計`api.php`，能將form表單的資料包含圖片路徑(記得存入空間)一起轉成SESSION或COOKIE接著導向到preview.php。
- * 導向連結可用`header('location:preview.php');`
- */
-?>
+// print_r($_POST);
+
+/* 用一個變數去接POST 過來的資料 */
+$info=$_POST;
+// print_r($info) ;
+
+/* 將$_FILES的 資料copy*/
+copy($_FILES['photo']['tmp_name'],"upload/".$_FILES['photo']['name']);
+
+/* 將圖片路徑先存入到$info這個陣列中 */
+$info['photo']=$_FILES['photo']["name"];
+// print_r($info);
+session_start();
+/* 將$info這陣列內的所有資料換成$_SESSION的陣列 */
+$_SESSION['test']=$info;
+
+// print_r($_SESSION);
+
+header("location:preview.php");
